@@ -1,27 +1,40 @@
 import React, { useState } from "react";
 import "./NewExpenseForm.css";
 
-const NewExpenseForm = () => {
-  const [title, setTitle] = useState("");
-  const [price, setPrice] = useState("");
-  const [date, setDate] = useState("");
+const NewExpenseForm = ({ getData }) => {
+  // const [title, setTitle] = useState("");
+  // const [price, setPrice] = useState("");
+  // const [date, setDate] = useState("");
+  const [data, setData] = useState({
+    title: "",
+    price: "",
+    date: "",
+  });
   function titleChangeHandler(event) {
-    setTitle(event.target.value);
+    setData((prevState) => {
+      return { ...prevState, title: event.target.value };
+    });
   }
   function priceChangeHandler(event) {
-    setPrice(event.target.value);
+    // setPrice(event.target.value);
+    setData((prevState) => {
+      return { ...prevState, price: event.target.value };
+    });
   }
   function dateChangeHandler(event) {
-    setDate(event.target.value);
+    // setDate(event.target.value);
+    setData((prevState) => {
+      return { ...prevState, date: event.target.value };
+    });
   }
   const submitHandler = (event) => {
     event.preventDefault();
     const expenseData = {
-      title: title,
-      price: price,
-      date: date,
+      title: data.title,
+      price: data.price,
+      date: new Date(data.date),
     };
-    console.log(expenseData);
+    getData(expenseData);
   };
   return (
     <form onSubmit={submitHandler}>
